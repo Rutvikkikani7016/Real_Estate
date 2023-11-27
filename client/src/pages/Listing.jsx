@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { useSelector } from "react-redux";
@@ -136,7 +136,7 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
                 className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
@@ -144,7 +144,26 @@ export default function Listing() {
                 Contact landlord
               </button>
             )}
-            {contact && <Contact listing={listing} />}
+            {contact && <Contact listing={listing} />} */}
+            {currentUser ? (
+              <>
+                {!contact && (
+                  <button
+                    onClick={() => setContact(true)}
+                    className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
+                  >
+                    Contact landlord
+                  </button>
+                )}
+                {contact && <Contact listing={listing} />}
+              </>
+            ) : (
+              <Link to="/sign-in">
+                <button className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3">
+                  Login to contact landlord
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       )}

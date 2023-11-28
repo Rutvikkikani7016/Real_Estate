@@ -58,7 +58,7 @@ export default function Listing() {
       )}
       {listing && !loading && !error && (
         <div>
-          <Swiper navigation>
+          {/* <Swiper navigation>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <div
@@ -70,7 +70,74 @@ export default function Listing() {
                 ></div>
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> */}
+          <div
+            id="carouselExampleCaptions"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-indicators">
+              {listing.imageUrls.map((url, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  data-bs-target="#carouselExampleCaptions"
+                  data-bs-slide-to={index}
+                  className={index === 0 ? "active" : ""}
+                  aria-label={`Slide ${index + 1}`}
+                ></button>
+              ))}
+            </div>
+            <div class="carousel-inner">
+              {listing.imageUrls.map((url, index) => (
+                <div
+                  key={index}
+                  class={`carousel-item ${index === 0 ? "active" : ""}`}
+                >
+                  <img
+                    src={url}
+                    class="d-block w-100"
+                    style={{
+                      width: "100%",
+                      objectFit: "cover",
+                    }}
+                    alt={`Slide ${index + 1}`}
+                  />
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>{`Slide ${index + 1} label`}</h5>
+                    <p>
+                      Some representative placeholder content for this slide.
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
           <div className="fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer">
             <FaShare
               className="text-slate-500"
@@ -88,7 +155,7 @@ export default function Listing() {
               Link copied!
             </p>
           )}
-          <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
+          <div className="flex flex-col max-w-4xl mx-auto p-3 my-3 gap-4">
             <p className="text-2xl font-semibold">
               {listing.name} - ${" "}
               {listing.offer
@@ -136,15 +203,6 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
-            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                onClick={() => setContact(true)}
-                className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
-              >
-                Contact landlord
-              </button>
-            )}
-            {contact && <Contact listing={listing} />} */}
             {currentUser ? (
               <>
                 {!contact && (
@@ -152,7 +210,7 @@ export default function Listing() {
                     onClick={() => setContact(true)}
                     className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
                   >
-                    Contact landlord
+                    Contact to landlord
                   </button>
                 )}
                 {contact && <Contact listing={listing} />}
@@ -160,7 +218,7 @@ export default function Listing() {
             ) : (
               <Link to="/sign-in">
                 <button className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3">
-                  Login to contact landlord
+                  contact to landlord
                 </button>
               </Link>
             )}
